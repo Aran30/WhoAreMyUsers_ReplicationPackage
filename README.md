@@ -5,6 +5,16 @@ Users?: A graphical language and modeling
 environment to specify your end-user profiles"**. It bundles the three components needed to start the tool and reproduce the demonstration, together with a single Docker Compose setup
 that builds and runs all of them.
 
+> **About the copies.** The three component directories in this repository are
+> **snapshots** taken at the time of paper submission, included here so the tool
+> can be reproduced exactly as it was demonstrated. They are frozen copies — the
+> actively maintained, up-to-date projects live in their own upstream
+> repositories:
+>
+> - Backend / B-UML → <https://github.com/BESSER-PEARL/BESSER>
+> - Web Modeling Editor (frontend) → <https://github.com/BESSER-PEARL/BESSER-Web-Modeling-Editor>
+> - Modeling agent → <https://github.com/BESSER-PEARL/modeling-agent>
+
 | Component | Directory | Role | Port |
 |-----------|-----------|------|------|
 | **Backend** | [`BESSER/`](./BESSER) | BESSER FastAPI backend — UML ↔ B-UML conversion, code generation, validation | `9000` |
@@ -130,8 +140,9 @@ previously exposed a key in any committed file, rotate it at
 
 ## Component documentation
 
-Each component keeps its own upstream README and license:
+Each component keeps its own upstream README and license. The links below point
+to the frozen local copy and to the live upstream repository:
 
-- Backend / B-UML: [`BESSER/README.md`](./BESSER/README.md)
-- Web Modeling Editor: [`BESSER-Web-Modeling-Editor-new/README.md`](./BESSER-Web-Modeling-Editor-new/README.md)
-- Modeling agent: [`modeling-agent/README.md`](./modeling-agent/README.md)
+- Backend / B-UML: [`BESSER/README.md`](./BESSER/README.md) — upstream: <https://github.com/BESSER-PEARL/BESSER>
+- Web Modeling Editor: [`BESSER-Web-Modeling-Editor-new/README.md`](./BESSER-Web-Modeling-Editor-new/README.md) — upstream: <https://github.com/BESSER-PEARL/BESSER-Web-Modeling-Editor>
+- Modeling agent: [`modeling-agent/README.md`](./modeling-agent/README.md) — upstream: <https://github.com/BESSER-PEARL/modeling-agent>
