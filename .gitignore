@@ -1,0 +1,27 @@
+# --- Secrets: never commit real API keys ---
+.env
+**/.env
+!.env.example
+!**/.env.example
+
+# Nested component git repositories (kept as plain source in the package,
+# not as git submodules).
+BESSER/.git/
+BESSER-Web-Modeling-Editor-new/.git/
+modeling-agent/.git/
+
+# Build / dependency artifacts
+**/node_modules/
+**/__pycache__/
+**/.pytest_cache/
+*.py[cod]
+**/*.egg-info/
+
+# Runtime files
+modeling-agent/config.yaml
+modeling-agent/application.log
+
+# Local-only corporate-CA build overrides (not part of the published package)
+docker-compose.override.yml
+**/Dockerfile.corp
+**/corp-ca.pem

@@ -1,0 +1,70 @@
+name: whoaremyusers
+
+# Replication package for the "Who Are My Users?" paper.
+# Brings up the three components as containers on a shared bridge network:
+#   1. backend         – BESSER FastAPI code-generation backend        (:9000)
+#   2. modeling-agent   – BESSER modeling agent (WebSocket)             (:8765)
+#   3. frontend        – BESSER Web Modeling Editor (Vite + Express)   (:8080)
+#
+# OPENAI_API_KEY is read from the .env file next to this compose file
+# (see .env.example). Both the backend and the modeling agent require it.
+
+services:
+  backend:
+    build:
+      context: ./BESSER
+      dockerfile: Dockerfile
+    image: whoaremyusers/backend:latest
+    container_name: wamu-backend
+    ports:
+      - "9000:9000"
+    environment:
+      - PYTHONPATH=/app
+      - OPENAI_API_KEY=${OPENAI_API_KEY:?Set OPENAI_API_KEY in .env (copy .env.example)}
+      # DEFAULT_CORS_ORIGINS already allows http://localhost:8080; override if needed.
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:8080,http://localhost:5173,http://localhost:3000}
+    restart: unless-stopped
+    networks:
+      - wamu
+
+  modeling-agent:
+    build:
+      context: ./modeling-agent
+      dockerfile: Dockerfile
+    image: whoaremyusers/modeling-agent:latest
+    container_name: wamu-modeling-agent
+    ports:
+      - "8765:8765"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:?Set OPENAI_API_KEY in .env (copy .env.example)}
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - wamu
+
+  frontend:
+    build:
+      context: ./BESSER-Web-Modeling-Editor-new
+      dockerfile: Dockerfile
+      # These URLs are baked into the JS bundle at BUILD time. The browser runs
+      # on the host, so they must reference the host-published ports below —
+      # not the internal Docker service names.
+      args:
+        DEPLOYMENT_URL: ${DEPLOYMENT_URL:-http://localhost:8080}
+        BACKEND_URL: ${BACKEND_URL:-http://localhost:9000/besser_api}
+        UML_BOT_WS_URL: ${UML_BOT_WS_URL:-ws://localhost:8765}
+    image: whoaremyusers/frontend:latest
+    container_name: wamu-frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+      - modeling-agent
+    restart: unless-stopped
+    networks:
+      - wamu
+
+networks:
+  wamu:
+    name: wamu_network
+    driver: bridge
