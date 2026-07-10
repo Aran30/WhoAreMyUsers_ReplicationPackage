@@ -1,0 +1,26 @@
+{
+  "name": "User_3",
+  "model": {
+    "id": "user_1",
+    "class": "User",
+    "Personal_Information": {
+      "gender": "Female"
+    },
+    "Competence": {
+      "Language": [
+        {
+          "iso693_3": "Spanish",
+          "level": "B2"
+        },
+        {
+          "iso693_3": "English",
+          "level": "A2"
+        },
+        {
+          "iso693_3": "French",
+          "level": "C2"
+        }
+      ]
+    }
+  }
+}

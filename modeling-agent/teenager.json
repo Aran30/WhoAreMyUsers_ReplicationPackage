@@ -1,0 +1,10 @@
+{
+  "name": "Teenager",
+  "model": {
+    "id": "user_1",
+    "class": "User",
+    "Personal_Information": {
+      "age": 18
+    }
+  }
+}
