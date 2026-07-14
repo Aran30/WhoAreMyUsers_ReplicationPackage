@@ -120,6 +120,14 @@ All configuration lives in the root `.env` (see [`.env.example`](./.env.example)
 - **Changed a URL in `.env` but the frontend still uses the old one** — the URLs
   are baked in at build time. Rebuild the frontend:
   `docker compose build frontend && docker compose up -d frontend`.
+- **`ReadTimeoutError` while downloading Python packages (e.g. TensorFlow)** — on slower or unstable internet connections, `pip` may time out while downloading large dependencies during the initial image build. Simply rerun the build, as it often succeeds on a second attempt:
+
+  ```bash
+  docker compose up --build
+  ```
+
+  If the problem persists, check your network connection or try again later, as the issue is usually caused by a temporary timeout while downloading packages from PyPI.
+  
 
 ## Building behind a corporate proxy
 
