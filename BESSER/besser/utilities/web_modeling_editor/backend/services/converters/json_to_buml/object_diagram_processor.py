@@ -214,6 +214,10 @@ def process_object_diagram(json_data, domain_model):
                     continue
 
                 if attr_name and value is not None:
+                    # Profile names are used as identifiers by downstream operations.
+                    if attr_name == "name" and isinstance(value, str):
+                        value = value.replace(" ", "_")
+
                     # Find the corresponding property in the class or its ancestors
                     property_obj = None
                     all_attrs = get_all_attributes(class_obj, domain_model)
