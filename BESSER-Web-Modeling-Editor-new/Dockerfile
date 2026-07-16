@@ -24,11 +24,18 @@ ENV GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
 # Set up the build directory
 WORKDIR $build_dir
 
-# Copy all project files into the build directory
-COPY . .
+# Copy dependency manifests first to maximize cache reuse and avoid
+# reinstalling dependencies on every source change.
+COPY package.json package-lock.json ./
+COPY packages/editor/package.json ./packages/editor/package.json
+COPY packages/server/package.json ./packages/server/package.json
+COPY packages/webapp/package.json ./packages/webapp/package.json
 
-# Install dependencies and build the application
-RUN npm install
+# Install dependencies deterministically from the lockfile.
+RUN npm ci
+
+# Copy the rest of the project files and build the application.
+COPY . .
 RUN npm run build
 
 # Second stage: Sets up the container to run the application

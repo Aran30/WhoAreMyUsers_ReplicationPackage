@@ -5,7 +5,10 @@ module.exports = {
   entry: './src/main/server.ts',
   target: 'node',
   mode: 'production',
-  devtool: 'inline-source-map',
+  devtool: false,
+  optimization: {
+    minimize: false,
+  },
   node: {
     __dirname: true,
   },
