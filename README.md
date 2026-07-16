@@ -75,6 +75,32 @@ host ports.
 To run in the background use `docker compose up --build -d`, and follow logs with
 `docker compose logs -f`.
 
+## Example projects
+
+Two exported projects are included in [`example_models/`](./example_models) so
+you can inspect the models used in the demonstration without recreating the
+entire workflow from scratch:
+
+- [`baseProject.json`](./example_models/baseProject.json) is the starting
+  project. It contains the base public-service application, the example
+  user-profile model, and the base agent model, but does not contain the
+  personalized variants.
+- [`personalizedProject.json`](./example_models/personalizedProject.json) is
+  the project after the personalized variants have been generated. It lets you
+  inspect the resulting personalized GUI and agent models directly.
+
+To open either project, use the **Import Project** option in the welcome dialog
+of the editor and select the corresponding `.json` file. The import option is
+shown below:
+
+![Import Project option in the BESSER Web Modeling Editor](./importProjectExample.png)
+
+The demonstration workflow uses the conversational modeling assistant to create
+the user-profile model, then uses that profile to personalize the GUI and agent
+models. If you do not have an OpenAI API key, you can still import and inspect
+`personalizedProject.json`; only the LLM-powered modeling and personalization
+steps require an API key.
+
 ## Stopping / cleaning up
 
 ```bash
